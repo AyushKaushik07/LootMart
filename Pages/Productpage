@@ -1,0 +1,451 @@
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import 'product_page_model.dart';
+export 'product_page_model.dart';
+
+/// create a product page where the image of the product is displayed and the
+/// name of the product below it, category it belongs in, actual price and the
+/// selling price of the product,key features, description, chat now option
+/// beside the sellers name
+class ProductPageWidget extends StatefulWidget {
+  const ProductPageWidget({super.key});
+
+  static String routeName = 'ProductPage';
+  static String routePath = '/productPage';
+
+  @override
+  State<ProductPageWidget> createState() => _ProductPageWidgetState();
+}
+
+class _ProductPageWidgetState extends State<ProductPageWidget> {
+  late ProductPageModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => ProductPageModel());
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SingleChildScrollView(
+          primary: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+                height: 400,
+                child: Stack(
+                  children: [
+                    Image.network(
+                      'https://images.unsplash.com/photo-1569144157595-7a2d2e32258f?w=500&h=500',
+                      width: MediaQuery.sizeOf(context).width,
+                      height: 400,
+                      fit: BoxFit.cover,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.transparent, Colors.black],
+                          stops: [0, 0.9],
+                          begin: AlignmentDirectional(0, 1),
+                          end: AlignmentDirectional(0, -1),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 48, 16, 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FlutterFlowIconButton(
+                              borderRadius: 20,
+                              buttonSize: 40,
+                              fillColor: Color(0x33FFFFFF),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                              onPressed: () {
+                                print('IconButton pressed ...');
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(0),
+                    bottomRight: Radius.circular(0),
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'iPhone 14 Pro Max',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  fontFamily: 'Inter Tight',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Text(
+                            'Smartphones',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 12, 0),
+                                child: Text(
+                                  '₹1,29,999',
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Inter Tight',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ].divide(SizedBox(width: 12)),
+                          ),
+                        ].divide(SizedBox(height: 8)),
+                      ),
+                      Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Key Features',
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Inter Tight',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.memory,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        '256GB Storage',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ].divide(SizedBox(width: 8)),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.camera_alt,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        '48MP Triple Camera System',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ].divide(SizedBox(width: 8)),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.battery_full,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        'All-day Battery Life',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ].divide(SizedBox(width: 8)),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.screen_lock_portrait,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        '6.7-inch Super Retina XDR display',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ].divide(SizedBox(width: 8)),
+                                  ),
+                                ].divide(SizedBox(height: 8)),
+                              ),
+                            ].divide(SizedBox(height: 12)),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Description',
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Inter Tight',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                              Text(
+                                'Experience the ultimate iPhone with our most Pro camera system ever and the fastest smartphone chip. Featuring a 48MP Main camera with an advanced quad-pixel sensor, Cinematic mode now in 4K HDR, Action mode for smooth videos, and all-day battery life.',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ].divide(SizedBox(height: 12)),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Seller Information',
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Inter Tight',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .accent1,
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            child: Image.network(
+                                              'https://images.unsplash.com/photo-1525219884637-43180fbb6455?w=500&h=500',
+                                              width: 50,
+                                              height: 50,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ].divide(SizedBox(width: 12)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 140, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'TechHub Electronics',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                        Text(
+                                          '4.8 ★ • 2,345 reviews',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ].divide(SizedBox(height: 12)),
+                          ),
+                        ),
+                      ),
+                      FFButtonWidget(
+                        onPressed: () {
+                          print('Button pressed ...');
+                        },
+                        text: 'Chat Now',
+                        options: FFButtonOptions(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: 56,
+                          padding: EdgeInsets.all(8),
+                          iconPadding:
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Inter Tight',
+                                    color: FlutterFlowTheme.of(context).info,
+                                    fontSize: 25,
+                                    letterSpacing: 0.0,
+                                  ),
+                          elevation: 3,
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                      ),
+                    ].divide(SizedBox(height: 20)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
