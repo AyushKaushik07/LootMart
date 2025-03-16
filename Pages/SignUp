@@ -58,11 +58,15 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       }
 
       await UsersRecord.collection.doc(user.uid).update(createUsersRecordData(
-            uid: '',
+            studname: _model.uidTextController.text,
+            studId: _model.uidTextController.text,
           ));
 
       context.pushNamedAuth(SignUpCompleteWidget.routeName, context.mounted);
     });
+
+    _model.studnameTextController ??= TextEditingController();
+    _model.studnameFocusNode ??= FocusNode();
 
     _model.uidTextController ??= TextEditingController();
     _model.uidFocusNode ??= FocusNode();
@@ -158,6 +162,75 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   TextFormField(
+                                    controller: _model.studnameTextController,
+                                    focusNode: _model.studnameFocusNode,
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Full Name',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF15161E),
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF15161E),
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFE0E0E0),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: Color(0xFF15161E),
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    minLines: 1,
+                                    validator: _model
+                                        .studnameTextControllerValidator
+                                        .asValidator(context),
+                                  ),
+                                  TextFormField(
                                     controller: _model.uidTextController,
                                     focusNode: _model.uidFocusNode,
                                     autofocus: false,
@@ -225,123 +298,75 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                     validator: _model.uidTextControllerValidator
                                         .asValidator(context),
                                   ),
-                                  StreamBuilder<List<UserInfoRecord>>(
-                                    stream: queryUserInfoRecord(
-                                      queryBuilder: (userInfoRecord) =>
-                                          userInfoRecord.where(
-                                        'email',
-                                        isLessThanOrEqualTo: currentUserEmail,
-                                      ),
-                                      singleRecord: true,
-                                    ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 50,
-                                            height: 50,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
-                                              ),
-                                            ),
+                                  TextFormField(
+                                    controller: _model.emailTextController,
+                                    focusNode: _model.emailFocusNode,
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Email (@srmist.edu.in)',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF15161E),
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
                                           ),
-                                        );
-                                      }
-                                      List<UserInfoRecord>
-                                          emailUserInfoRecordList =
-                                          snapshot.data!;
-                                      // Return an empty Container when the item does not exist.
-                                      if (snapshot.data!.isEmpty) {
-                                        return Container();
-                                      }
-                                      final emailUserInfoRecord =
-                                          emailUserInfoRecordList.isNotEmpty
-                                              ? emailUserInfoRecordList.first
-                                              : null;
-
-                                      return TextFormField(
-                                        controller: _model.emailTextController,
-                                        focusNode: _model.emailFocusNode,
-                                        autofocus: false,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: 'Email (@srmist.edu.in)',
-                                          labelStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: Color(0xFF15161E),
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: Color(0xFF15161E),
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E0E0),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF15161E),
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFE0E0E0),
+                                          width: 1.0,
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              color: Color(0xFF15161E),
-                                              fontSize: 16,
-                                              letterSpacing: 0.0,
-                                            ),
-                                        minLines: 1,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        validator: _model
-                                            .emailTextControllerValidator
-                                            .asValidator(context),
-                                      );
-                                    },
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: Color(0xFF15161E),
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    minLines: 1,
+                                    keyboardType: TextInputType.emailAddress,
+                                    validator: _model
+                                        .emailTextControllerValidator
+                                        .asValidator(context),
                                   ),
                                   TextFormField(
                                     controller: _model.passTextController,
@@ -539,7 +564,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                   await UsersRecord.collection
                                       .doc(user.uid)
                                       .update(createUsersRecordData(
-                                        uid: '',
+                                        studname: _model.uidTextController.text,
+                                        studId: _model.uidTextController.text,
                                       ));
 
                                   context.pushNamedAuth(
