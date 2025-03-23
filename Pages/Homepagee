@@ -314,8 +314,15 @@ class _HomepageeWidgetState extends State<HomepageeWidget> {
                                       productsProductRecord.images.firstOrNull!;
                                   safeSetState(() {});
 
-                                  context
-                                      .pushNamed(ProductPageWidget.routeName);
+                                  context.pushNamed(
+                                    ProductPageWidget.routeName,
+                                    queryParameters: {
+                                      'prodref': serializeParam(
+                                        productsProductRecord.reference,
+                                        ParamType.DocumentReference,
+                                      ),
+                                    }.withoutNulls,
+                                  );
                                 },
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
@@ -324,8 +331,8 @@ class _HomepageeWidgetState extends State<HomepageeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12, 0, 12, 0),
-                                      child: StreamBuilder<List<UsersRecord>>(
-                                        stream: queryUsersRecord(
+                                      child: StreamBuilder<List<ProductRecord>>(
+                                        stream: queryProductRecord(
                                           singleRecord: true,
                                         ),
                                         builder: (context, snapshot) {
@@ -347,16 +354,16 @@ class _HomepageeWidgetState extends State<HomepageeWidget> {
                                               ),
                                             );
                                           }
-                                          List<UsersRecord>
-                                              imageUsersRecordList =
+                                          List<ProductRecord>
+                                              imageProductRecordList =
                                               snapshot.data!;
                                           // Return an empty Container when the item does not exist.
                                           if (snapshot.data!.isEmpty) {
                                             return Container();
                                           }
-                                          final imageUsersRecord =
-                                              imageUsersRecordList.isNotEmpty
-                                                  ? imageUsersRecordList.first
+                                          final imageProductRecord =
+                                              imageProductRecordList.isNotEmpty
+                                                  ? imageProductRecordList.first
                                                   : null;
 
                                           return InkWell(
