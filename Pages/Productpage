@@ -1,9 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
+import '/index.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -81,6 +83,51 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            appBar: AppBar(
+              backgroundColor: Color(0xFF6F61EF),
+              automaticallyImplyLeading: false,
+              leading: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 7),
+                child: Container(
+                  width: 62.2,
+                  height: 61.2,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).primary,
+                  ),
+                  alignment: AlignmentDirectional(0, 0),
+                  child: FlutterFlowIconButton(
+                    buttonSize: 48,
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    onPressed: () async {
+                      context.pushNamed(HomepageeWidget.routeName);
+                    },
+                  ),
+                ),
+              ),
+              title: Align(
+                alignment: AlignmentDirectional(0, 0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 45, 0),
+                  child: Text(
+                    'LootMart',
+                    style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Inter',
+                          color: Colors.white,
+                          fontSize: 40,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ),
+              ),
+              actions: [],
+              centerTitle: false,
+              elevation: 0,
+            ),
             body: SingleChildScrollView(
               primary: false,
               child: Column(
@@ -103,7 +150,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                       children: [
                         Container(
                           width: 390.3,
-                          height: 272.22,
+                          height: 272.2,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -430,6 +477,17 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                               ),
                             ].divide(SizedBox(height: 20)),
                           ),
+                        ),
+                        FlutterFlowIconButton(
+                          buttonSize: 48,
+                          icon: Icon(
+                            Icons.arrow_back_rounded,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            print('IconButton pressed ...');
+                          },
                         ),
                       ],
                     ),
