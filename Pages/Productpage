@@ -84,29 +84,21 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             appBar: AppBar(
-              backgroundColor: Color(0xFF6F61EF),
+              backgroundColor: FlutterFlowTheme.of(context).primary,
               automaticallyImplyLeading: false,
-              leading: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 7),
-                child: Container(
-                  width: 62.2,
-                  height: 61.2,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primary,
-                  ),
-                  alignment: AlignmentDirectional(0, 0),
-                  child: FlutterFlowIconButton(
-                    buttonSize: 48,
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    onPressed: () async {
-                      context.pushNamed(HomepageeWidget.routeName);
-                    },
-                  ),
+              leading: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30,
+                borderWidth: 1,
+                buttonSize: 60,
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: Colors.white,
+                  size: 30,
                 ),
+                onPressed: () async {
+                  context.pushNamed(HomepageeWidget.routeName);
+                },
               ),
               title: Align(
                 alignment: AlignmentDirectional(0, 0),
@@ -125,8 +117,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                 ),
               ),
               actions: [],
-              centerTitle: false,
-              elevation: 0,
+              centerTitle: true,
+              elevation: 2,
             ),
             body: SingleChildScrollView(
               primary: false,
@@ -169,7 +161,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 5),
                           child: Builder(
                             builder: (context) {
-                              final images = productPageProductRecord.images
+                              final productImages = productPageProductRecord
+                                  .productImage
                                   .map((e) => e)
                                   .toList()
                                   .take(5)
@@ -177,9 +170,10 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
 
                               return Row(
                                 mainAxisSize: MainAxisSize.max,
-                                children:
-                                    List.generate(images.length, (imagesIndex) {
-                                  final imagesItem = images[imagesIndex];
+                                children: List.generate(productImages.length,
+                                    (productImagesIndex) {
+                                  final productImagesItem =
+                                      productImages[productImagesIndex];
                                   return Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 5, 0),
@@ -189,13 +183,14 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        FFAppState().selectedPic = imagesItem;
+                                        FFAppState().selectedPic =
+                                            productImagesItem;
                                         safeSetState(() {});
                                       },
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image.network(
-                                          imagesItem,
+                                          productImagesItem,
                                           width: 80,
                                           height: 80,
                                           fit: BoxFit.cover,
@@ -451,8 +446,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                 ),
                               ),
                               FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
+                                onPressed: () async {
+                                  context.pushNamed(ChatsWidget.routeName);
                                 },
                                 text: 'Chat Now',
                                 options: FFButtonOptions(
@@ -477,17 +472,6 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                               ),
                             ].divide(SizedBox(height: 20)),
                           ),
-                        ),
-                        FlutterFlowIconButton(
-                          buttonSize: 48,
-                          icon: Icon(
-                            Icons.arrow_back_rounded,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
                         ),
                       ],
                     ),
