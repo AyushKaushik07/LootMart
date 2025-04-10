@@ -215,7 +215,7 @@ class _HomepageeWidgetState extends State<HomepageeWidget> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     unselectedChipStyle: ChipStyle(
-                                      backgroundColor: Color(0x00000000),
+                                      backgroundColor: Color(0xFFFFA2A2),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -254,8 +254,8 @@ class _HomepageeWidgetState extends State<HomepageeWidget> {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                  child: StreamBuilder<List<ProductRecord>>(
-                    stream: queryProductRecord(
+                  child: FutureBuilder<List<ProductRecord>>(
+                    future: queryProductRecordOnce(
                       queryBuilder: (productRecord) => productRecord.where(
                         'category',
                         isEqualTo: _model.choiceChipsValue,
@@ -304,144 +304,194 @@ class _HomepageeWidgetState extends State<HomepageeWidget> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  FFAppState().selectedPic =
-                                      productsProductRecord.images.firstOrNull!;
-                                  safeSetState(() {});
-
-                                  context.pushNamed(
-                                    ProductPageWidget.routeName,
-                                    queryParameters: {
-                                      'prodref': serializeParam(
-                                        productsProductRecord.reference,
-                                        ParamType.DocumentReference,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 12, 0),
-                                      child: StreamBuilder<List<ProductRecord>>(
-                                        stream: queryProductRecord(
-                                          singleRecord: true,
+                              child: StreamBuilder<List<ProductRecord>>(
+                                stream: queryProductRecord(
+                                  singleRecord: true,
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
                                         ),
-                                        builder: (context, snapshot) {
-                                          // Customize what your widget looks like when it's loading.
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: SizedBox(
-                                                width: 50,
-                                                height: 50,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                          List<ProductRecord>
-                                              imageProductRecordList =
-                                              snapshot.data!;
-                                          // Return an empty Container when the item does not exist.
-                                          if (snapshot.data!.isEmpty) {
-                                            return Container();
-                                          }
-                                          final imageProductRecord =
-                                              imageProductRecordList.isNotEmpty
-                                                  ? imageProductRecordList.first
-                                                  : null;
+                                      ),
+                                    );
+                                  }
+                                  List<ProductRecord> columnProductRecordList =
+                                      snapshot.data!;
+                                  // Return an empty Container when the item does not exist.
+                                  if (snapshot.data!.isEmpty) {
+                                    return Container();
+                                  }
+                                  final columnProductRecord =
+                                      columnProductRecordList.isNotEmpty
+                                          ? columnProductRecordList.first
+                                          : null;
 
-                                          return InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              FFAppState().selectedPic =
-                                                  productsProductRecord
-                                                      .images.firstOrNull!;
-                                              safeSetState(() {});
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(0),
-                                                bottomRight: Radius.circular(0),
-                                                topLeft: Radius.circular(12),
-                                                topRight: Radius.circular(12),
-                                              ),
-                                              child: Image.network(
-                                                FFAppState().selectedPic,
-                                                width:
-                                                    MediaQuery.sizeOf(context)
+                                  return InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      FFAppState().selectedPic =
+                                          productsProductRecord
+                                              .productImage.firstOrNull!;
+                                      safeSetState(() {});
+
+                                      context.pushNamed(
+                                        ProductPageWidget.routeName,
+                                        queryParameters: {
+                                          'prodref': serializeParam(
+                                            productsProductRecord.reference,
+                                            ParamType.DocumentReference,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12, 0, 12, 0),
+                                          child: StreamBuilder<
+                                              List<ProductRecord>>(
+                                            stream: queryProductRecord(
+                                              singleRecord: true,
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<ProductRecord>
+                                                  imageProductRecordList =
+                                                  snapshot.data!;
+                                              // Return an empty Container when the item does not exist.
+                                              if (snapshot.data!.isEmpty) {
+                                                return Container();
+                                              }
+                                              final imageProductRecord =
+                                                  imageProductRecordList
+                                                          .isNotEmpty
+                                                      ? imageProductRecordList
+                                                          .first
+                                                      : null;
+
+                                              return InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  FFAppState().selectedPic =
+                                                      imageProductRecord!
+                                                          .productImage
+                                                          .firstOrNull!;
+                                                },
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(0),
+                                                    bottomRight:
+                                                        Radius.circular(0),
+                                                    topLeft:
+                                                        Radius.circular(12),
+                                                    topRight:
+                                                        Radius.circular(12),
+                                                  ),
+                                                  child: Image.network(
+                                                    FFAppState().selectedPic,
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
                                                             .width *
                                                         0.8,
-                                                height: 185.62,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Column(
+                                                    height: 185.62,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
-                                            Align(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(36, 0, 0, 0),
-                                                child: Text(
-                                                  productsProductRecord
-                                                      .sellingPrice
-                                                      .toString(),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                36, 0, 0, 0),
+                                                    child: Text(
+                                                      productsProductRecord
+                                                          .sellingPrice
+                                                          .toString(),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
                                           ],
                                         ),
+                                        Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            productsProductRecord.productName,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Text(
-                                        productsProductRecord.productName,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  );
+                                },
                               ),
                             ),
                           );
