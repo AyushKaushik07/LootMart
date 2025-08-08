@@ -14,7 +14,7 @@ import 'homepagee_model.dart';
 export 'homepagee_model.dart';
 
 class HomepageeWidget extends StatefulWidget {
-  const HomepageeWidget({super.key});.
+  const HomepageeWidget({super.key});
 
   static String routeName = 'Homepagee';
   static String routePath = '/homepagee';
